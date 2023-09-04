@@ -10,6 +10,12 @@ const botTypeClasses = {
 };
 
 function BotSpecs({ bot }) {
+  // Sinlge BotCard Presentation
+// Displays more information about Bot
+//  1. Receive single Bot info ----- Prop
+//  2. Display selected Bot info
+//  3. Display enlisted Bot from BotCard ------ Update State
+
   return (
     <div className="ui segment">
       <div className="ui two column centered grid">
