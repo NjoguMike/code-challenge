@@ -53,7 +53,9 @@ function BotCard({ bot , botDetails }) {
               <button
                 className="ui mini red button"
                 id={bot.id}
-                // onClick={removeBot}
+                name={bot.name}
+                value={bot.id}
+                onClick={(e)=> botDetails(e.target)}
               >
                 x
               </button>
