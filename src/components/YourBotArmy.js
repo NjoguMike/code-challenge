@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React from "react";
 import BotCard from "./BotCard";
 
 function YourBotArmy( { bots , botValue, relieveDuty} ) {
@@ -10,8 +10,7 @@ function YourBotArmy( { bots , botValue, relieveDuty} ) {
     4. Bot is still rendered in BotCollection ----- no modification of BotCollection/BotsArray
 
      */
-  const [ army, setArmy ] = useState([])
-
+ 
   const botsCollection = bots.map(bot => <BotCard key={bot.id} bot={bot} botDetails={botValue} releaseBot={relieveDuty}/>)
 
   return (

@@ -6,12 +6,9 @@ function BotsPage() {
   //start here with your code for step one
 
   const [ botData, setBotData ] = useState([])
-  const [ botArmy, setBotArmy ] = useState(botData)
+  const [ botArmy, setBotArmy ] = useState([])
   const [ releaseBot, setDelete ] = useState(0)
 
-  console.log(releaseBot)
-
-  const updateBotArmy = () => botData.filter(bot => bot.id !== releaseBot)
   const fetchBotData = ()=> {
     fetch("http://localhost:8002/bots")
       .then(res => res.json())
@@ -27,10 +24,7 @@ function BotsPage() {
       })
       .then(res => res.json())
       .then(() => fetchBotData())
-
   }
-
-  
 
   useEffect(
     ()=>fetchBotData(),
@@ -44,32 +38,30 @@ function BotsPage() {
 
   function selectBot(value){
     const botIdentifier = value
+console.log(value)
 
-    const selectedBot = botData.find(bot => bot.name === botIdentifier)
+    const selectedBot = botData.find(bot => bot.id == botIdentifier)
     const selectedBots = botArmy.find(bot => bot === selectedBot) ? botArmy : [...botArmy,selectedBot]
     setBotArmy(selectedBots)
-   
   }
 
-  function toRemove(value){
+  function removeFromArmy(value){
     const unselectedBot = value
 
-    const updateArmy = botArmy.filter(bot => bot.name != unselectedBot)
+    const updateArmy = botArmy.filter(bot => bot.id != unselectedBot)
     setBotArmy(updateArmy)
     
   }
 
   function deleteBot(botDelete){
     const toDelete = botDelete
-    
-    const filteredBots = botData.filter(bot => bot.id != toDelete)
-    setBotArmy(filteredBots)
     setDelete(toDelete)
+    setBotArmy(botArmy.filter(bot => bot.id != toDelete))
   }
   
   return (
     <div>
-      <YourBotArmy bots={botArmy} botValue={toRemove} relieveDuty={deleteBot}/>
+      <YourBotArmy bots={botArmy} botValue={removeFromArmy} relieveDuty={deleteBot}/>
       <BotCollection bots={botData} botSelector={selectBot} relieveDuty={deleteBot}/>
     </div>
   )

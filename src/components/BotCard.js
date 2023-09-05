@@ -17,16 +17,16 @@ function BotCard({ bot , botDetails , releaseBot }) {
 
 
   return (
-    <div className="ui column" >
+    <div className="ui column">
       <div
         className="ui card"
         key={bot.id}
-        onClick={(e)=> botDetails(e.target.name)}>
+        onClick={(e)=> {e.stopPropagation(); botDetails(e.target.id)}}>
         <div className="image">
-          <img alt="oh no!" src={bot.avatar_url} name={bot.name} id={bot.id}/>
+          <img alt="oh no!" src={bot.avatar_url} id={bot.id}/>
         </div>
-        <div className="content" name={bot.name} id={bot.id}>
-          <div className="header">
+        <div className="content" id={bot.id}>
+          <div className="header"  id={bot.id}>
             {bot.name}
             <i className={botTypeClasses[bot.bot_class]} />
           </div>
@@ -55,7 +55,7 @@ function BotCard({ bot , botDetails , releaseBot }) {
                 id={bot.id}
                 name={bot.name}
                 value={bot.id}
-                onClick={(e)=> releaseBot(e.target.value)}
+                onClick={(e)=> {e.stopPropagation(); releaseBot(e.target.value)}}
               >
                 x
               </button>
