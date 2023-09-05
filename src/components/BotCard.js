@@ -9,44 +9,32 @@ const botTypeClasses = {
   Captain: "icon star",
 };
 
-function BotCard({ bot , botHandler}) {
+function BotCard({ bot , botDetails }) {
 // Sinlge BotCard Presentation
 // For display on Grid
 //  1. Recieve single Bot info ----- prop
 //  2. Pass single Bot info ----- event listener { toBotArmy, toBotSpecs}
 
-    // const [ selection, setSelection ] = useState([])
-
-        function handleBot(e){
-          
-          const keyId = e.target.id
-            botHandler(keyId)            
-
-          // const selectBots = [...army,botSelect]
-          // setSelection(()=>botSelect)
-          // setArmy(()=>selectBots)
-
-        }
 
   return (
     <div className="ui column" >
       <div
         className="ui card"
         key={bot.id}
-        onClick={handleBot}>
+        onClick={(e)=> botDetails(e.target)}>
         <div className="image">
-          <img alt="oh no!" src={bot.avatar_url} id={bot.id}/>
+          <img alt="oh no!" src={bot.avatar_url} name={bot.name} id={bot.id}/>
         </div>
-        <div className="content" id={bot.id}>
+        <div className="content" name={bot.name} id={bot.id}>
           <div className="header">
             {bot.name}
             <i className={botTypeClasses[bot.bot_class]} />
           </div>
-          <div className="meta text-wrap" id={bot.id}>
+          <div className="meta text-wrap">
             <small>{bot.catchphrase}</small>
           </div>
         </div>
-        <div className="extra content" id={bot.id}>
+        <div className="extra content">
           <span>
             <i className="icon heartbeat" />
             {bot.health}
@@ -61,12 +49,11 @@ function BotCard({ bot , botHandler}) {
             {bot.armor}
           </span>
           <span>
-            <div className="ui center aligned segment basic" id={bot.id}>
+            <div className="ui center aligned segment basic" name={bot.name}>
               <button
                 className="ui mini red button"
-                onClick={() => {
-                  console.log("add code to connect event listener")}
-                }
+                id={bot.id}
+                // onClick={removeBot}
               >
                 x
               </button>

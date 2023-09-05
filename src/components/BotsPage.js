@@ -6,11 +6,7 @@ function BotsPage() {
   //start here with your code for step one
 
   const [ botData, setBotData ] = useState([])
-  const [ army, setArmy ] = useState([])
-
-    function setBot(botSoldier){
-      setArmy(botSoldier)
-    }
+  const [ botArmy, setBotArmy ] = useState([])
 
   useEffect(
     ()=>{
@@ -21,10 +17,26 @@ function BotsPage() {
     [] 
   )
 
+  function selectBot(value){
+    const botIdentifier = value.name
+
+    const selectedBot = botData.find(bot => bot.name === botIdentifier)
+    const selectedBots = botArmy.find(bot => bot === selectedBot) ? botArmy : [...botArmy,selectedBot]
+    setBotArmy(selectedBots)
+  }
+
+  function toRemove(value){
+    const unselectedBot = value.id
+
+    const updateArmy = botArmy.filter(bot => bot.id != unselectedBot)
+    setBotArmy(updateArmy)
+  
+  }
+
   return (
     <div>
-      <YourBotArmy botArmy={army} bots={botData}/>
-      <BotCollection bots={botData} setBot={setBot}/>
+      <YourBotArmy bots={botArmy} botValue={toRemove}/>
+      <BotCollection bots={botData} botSelector={selectBot}/>
     </div>
   )
 }

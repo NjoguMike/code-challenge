@@ -1,7 +1,7 @@
 import React, { useState} from "react";
 import BotCard from "./BotCard";
 
-function YourBotArmy( { bots , botArmy  }) {
+function YourBotArmy( { bots , botValue} ) {
   //your bot army code here...
   /* Container #2
     1. Only Selected Bots are displayed ---- Event Listener, State
@@ -10,17 +10,16 @@ function YourBotArmy( { bots , botArmy  }) {
     4. Bot is still rendered in BotCollection ----- no modification of BotCollection/BotsArray
 
      */
-     const botSelect = bots.find((bot)=> bot.id === botArmy)
-  
-      console.log(bots)
+  const [ army, setArmy ] = useState([])
 
+  const botsCollection = bots.map(bot => <BotCard key={bot.id} bot={bot} botDetails={botValue}/>)
 
   return (
     <div className="ui segment inverted olive bot-army">
       <div className="ui five column grid">
         <div className="row bot-army-row">
-          {/*...and here.. */}
-          Your Bot Army
+          {botsCollection}
+          
         </div>
       </div>
     </div>
