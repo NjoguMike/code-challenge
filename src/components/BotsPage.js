@@ -6,63 +6,71 @@ function BotsPage() {
   //start here with your code for step one
 
   const [ botData, setBotData ] = useState([])
-  const [ botArmy, setBotArmy ] = useState([])
-  const [ toDelete , setDelete ] = useState("")
+  const [ botArmy, setBotArmy ] = useState(botData)
+  const [ releaseBot, setDelete ] = useState(0)
 
-  const fetchURL = "http://localhost:8002/bots"
+  console.log(releaseBot)
 
-  console.log(toDelete)
-  useEffect(
-    ()=>{
-      fetch(fetchURL)
+  const updateBotArmy = () => botData.filter(bot => bot.id !== releaseBot)
+  const fetchBotData = ()=> {
+    fetch("http://localhost:8002/bots")
       .then(res => res.json())
       .then(botData => setBotData(botData))
-    },
+  }
+
+  const deleteSelectBot = () => {
+    fetch("http://localhost:8002/bots/"+releaseBot, {
+        method: "DELETE",
+        headers: {
+          "Content-Type":"application/json"
+        }
+      })
+      .then(res => res.json())
+      .then(() => fetchBotData())
+
+  }
+
+  
+
+  useEffect(
+    ()=>fetchBotData(),
     [] 
   )
+
   useEffect(
-    ()=>{
-      fetch("http://localhost:8002/bots/"+toDelete, {
-        method: "DELETE",
-        headers:{
-            "Content-Type":"application/json"
-          }
-        }
-      )
-      .then(res => res.json())
-      .then(data => console.log(data))
-    },
-    [toDelete] 
+    ()=> deleteSelectBot(),
+    [releaseBot] 
   )
 
   function selectBot(value){
-    const botIdentifier = value.name
-    deleteBot(value)
+    const botIdentifier = value
+
     const selectedBot = botData.find(bot => bot.name === botIdentifier)
     const selectedBots = botArmy.find(bot => bot === selectedBot) ? botArmy : [...botArmy,selectedBot]
     setBotArmy(selectedBots)
+   
   }
 
   function toRemove(value){
-    const unselectedBot = value.id
-    deleteBot(value)
-    const updateArmy = botArmy.filter(bot => bot.id != unselectedBot)
+    const unselectedBot = value
+
+    const updateArmy = botArmy.filter(bot => bot.name != unselectedBot)
     setBotArmy(updateArmy)
-  
+    
   }
-  
-  function deleteBot(obj){
-    const toDelete = obj.value
-    // console.log(toDelete)
-    // const newBots = botData.filter(bot => bot.id != toDelete)
+
+  function deleteBot(botDelete){
+    const toDelete = botDelete
+    
+    const filteredBots = botData.filter(bot => bot.id != toDelete)
+    setBotArmy(filteredBots)
     setDelete(toDelete)
-
   }
-
+  
   return (
     <div>
-      <YourBotArmy bots={botArmy} botValue={toRemove}/>
-      <BotCollection bots={botData} botSelector={selectBot}/>
+      <YourBotArmy bots={botArmy} botValue={toRemove} relieveDuty={deleteBot}/>
+      <BotCollection bots={botData} botSelector={selectBot} relieveDuty={deleteBot}/>
     </div>
   )
 }

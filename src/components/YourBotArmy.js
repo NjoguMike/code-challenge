@@ -1,7 +1,7 @@
 import React, { useState} from "react";
 import BotCard from "./BotCard";
 
-function YourBotArmy( { bots , botValue} ) {
+function YourBotArmy( { bots , botValue, relieveDuty} ) {
   //your bot army code here...
   /* Container #2
     1. Only Selected Bots are displayed ---- Event Listener, State
@@ -12,7 +12,7 @@ function YourBotArmy( { bots , botValue} ) {
      */
   const [ army, setArmy ] = useState([])
 
-  const botsCollection = bots.map(bot => <BotCard key={bot.id} bot={bot} botDetails={botValue}/>)
+  const botsCollection = bots.map(bot => <BotCard key={bot.id} bot={bot} botDetails={botValue} releaseBot={relieveDuty}/>)
 
   return (
     <div className="ui segment inverted olive bot-army">

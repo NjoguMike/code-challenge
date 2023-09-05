@@ -9,7 +9,7 @@ const botTypeClasses = {
   Captain: "icon star",
 };
 
-function BotCard({ bot , botDetails }) {
+function BotCard({ bot , botDetails , releaseBot }) {
 // Sinlge BotCard Presentation
 // For display on Grid
 //  1. Recieve single Bot info ----- prop
@@ -21,7 +21,7 @@ function BotCard({ bot , botDetails }) {
       <div
         className="ui card"
         key={bot.id}
-        onClick={(e)=> botDetails(e.target)}>
+        onClick={(e)=> botDetails(e.target.name)}>
         <div className="image">
           <img alt="oh no!" src={bot.avatar_url} name={bot.name} id={bot.id}/>
         </div>
@@ -55,7 +55,7 @@ function BotCard({ bot , botDetails }) {
                 id={bot.id}
                 name={bot.name}
                 value={bot.id}
-                onClick={(e)=> botDetails(e.target)}
+                onClick={(e)=> releaseBot(e.target.value)}
               >
                 x
               </button>
