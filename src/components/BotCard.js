@@ -11,17 +11,27 @@ const botTypeClasses = {
 
 function BotCard({ bot , botDetails , releaseBot }) {
 // Sinlge BotCard Presentation
-// For display on Grid
 //  1. Recieve single Bot info ----- prop
 //  2. Pass single Bot info ----- event listener { toBotArmy, toBotSpecs}
 
+  function handleSelect(event){
+    event.stopPropagation()
+    const itemKey = event.target.id
+    botDetails(itemKey)
+  }
+
+  function handleClick(event){
+    event.stopPropagation()
+    const deleteKey = event.target.value
+    releaseBot(deleteKey)
+  }
 
   return (
     <div className="ui column">
       <div
         className="ui card"
         key={bot.id}
-        onClick={(e)=> {e.stopPropagation(); botDetails(e.target.id)}}>
+        onClick={handleSelect}>
         <div className="image">
           <img alt="oh no!" src={bot.avatar_url} id={bot.id}/>
         </div>
@@ -55,7 +65,7 @@ function BotCard({ bot , botDetails , releaseBot }) {
                 id={bot.id}
                 name={bot.name}
                 value={bot.id}
-                onClick={(e)=> {e.stopPropagation(); releaseBot(e.target.value)}}
+                onClick={handleClick}
               >
                 x
               </button>

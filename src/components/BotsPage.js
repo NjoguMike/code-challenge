@@ -37,26 +37,27 @@ function BotsPage() {
   )
 
   function selectBot(value){
-    const botIdentifier = value
-console.log(value)
+    const botIdentifier = parseInt(value)
 
-    const selectedBot = botData.find(bot => bot.id == botIdentifier)
+    const selectedBot = botData.find(bot => bot.id === botIdentifier)
     const selectedBots = botArmy.find(bot => bot === selectedBot) ? botArmy : [...botArmy,selectedBot]
+
     setBotArmy(selectedBots)
   }
 
   function removeFromArmy(value){
-    const unselectedBot = value
+    const unselectedBot = parseInt(value)
 
-    const updateArmy = botArmy.filter(bot => bot.id != unselectedBot)
+    const updateArmy = botArmy.filter(bot => bot.id !== unselectedBot)
     setBotArmy(updateArmy)
     
   }
 
   function deleteBot(botDelete){
-    const toDelete = botDelete
+    const toDelete = parseInt(botDelete)
+
     setDelete(toDelete)
-    setBotArmy(botArmy.filter(bot => bot.id != toDelete))
+    setBotArmy(botArmy.filter(bot => bot.id !== toDelete))
   }
   
   return (
