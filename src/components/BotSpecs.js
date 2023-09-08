@@ -9,12 +9,18 @@ const botTypeClasses = {
   Captain: "icon star",
 };
 
-function BotSpecs({ bot }) {
+function BotSpecs({ bot , enlist }) {
   // Sinlge BotCard Presentation
 // Displays more information about Bot
 //  1. Receive single Bot info ----- Prop
 //  2. Display selected Bot info
 //  3. Display enlisted Bot from BotCard ------ Update State
+
+function handleSelect(event){
+  event.stopPropagation()
+  const itemKey = event.target.id
+  enlist(itemKey)
+}
 
   return (
     <div className="ui segment">
@@ -59,18 +65,17 @@ function BotSpecs({ bot }) {
             <button
               className="ui button fluid"
               onClick={() =>
-                console.log("connect this to a function that shows all bots")
+                console.log(
+                  "connect this to a function that adds this bot to your bot army list"
+                )
               }
             >
               Go Back
             </button>
             <button
               className="ui button fluid"
-              onClick={() =>
-                console.log(
-                  "connect this to a function that adds this bot to your bot army list"
-                )
-              }
+              id={bot.id}
+              onClick={handleSelect}
             >
               Enlist
             </button>

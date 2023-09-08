@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import YourBotArmy from "./YourBotArmy";
 import BotCollection from "./BotCollection";
+import BotSpecs from "./BotSpecs";
 
 function BotsPage() {
   //start here with your code for step one
 
   const [ botData, setBotData ] = useState([])
   const [ botArmy, setBotArmy ] = useState([])
+  const [ botSpecs, setBotSpecs ] = useState([])
   const [ releaseBot, setDelete ] = useState(0)
 
   const fetchBotData = ()=> {
@@ -42,7 +44,18 @@ function BotsPage() {
     const selectedBot = botData.find(bot => bot.id === botIdentifier)
     const selectedBots = botArmy.find(bot => bot === selectedBot) ? botArmy : [...botArmy,selectedBot]
 
+    setBotSpecs(selectedBot)
+    console.log(botSpecs)
+  }
+  
+  function enlistBot(value){
+    const botIdentifier = parseInt(value)
+
+    const selectedBot = botData.find(bot => bot.id === botIdentifier)
+    const selectedBots = botArmy.find(bot => bot === selectedBot) ? botArmy : [...botArmy,selectedBot]
+
     setBotArmy(selectedBots)
+    console.log(botSpecs)
   }
 
   function removeFromArmy(value){
@@ -50,6 +63,7 @@ function BotsPage() {
 
     const updateArmy = botArmy.filter(bot => bot.id !== unselectedBot)
     setBotArmy(updateArmy)
+    setBotSpecs(botArmy)
     
   }
 
@@ -59,11 +73,14 @@ function BotsPage() {
     setDelete(toDelete)
     setBotArmy(botArmy.filter(bot => bot.id !== toDelete))
   }
+
+  const botRender = botData.find(bot => bot.id === botSpecs.id) ? <BotSpecs bot={botSpecs} enlist={enlistBot}/> : <BotCollection bots={botData} botSelector={selectBot} relieveDuty={deleteBot}/>
+  console.log(botRender)
   
   return (
     <div>
       <YourBotArmy bots={botArmy} botValue={removeFromArmy} relieveDuty={deleteBot}/>
-      <BotCollection bots={botData} botSelector={selectBot} relieveDuty={deleteBot}/>
+      {botRender}
     </div>
   )
 }
