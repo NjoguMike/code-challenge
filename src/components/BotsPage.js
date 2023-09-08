@@ -45,7 +45,7 @@ function BotsPage() {
     const selectedBots = botArmy.find(bot => bot === selectedBot) ? botArmy : [...botArmy,selectedBot]
 
     setBotSpecs(selectedBot)
-    console.log(botSpecs)
+    
   }
   
   function enlistBot(value){
@@ -53,19 +53,22 @@ function BotsPage() {
 
     const selectedBot = botData.find(bot => bot.id === botIdentifier)
     const selectedBots = botArmy.find(bot => bot === selectedBot) ? botArmy : [...botArmy,selectedBot]
-
+    const botDataFilter = botData.filter( bot => bot.id !== botIdentifier)
     setBotArmy(selectedBots)
     setBotSpecs(botArmy)
-    console.log(botSpecs)
+    setBotData(botDataFilter)
   }
 
   function removeFromArmy(value){
     const unselectedBot = parseInt(value)
 
     const updateArmy = botArmy.filter(bot => bot.id !== unselectedBot)
+    const returnItem = botArmy.find(bot => bot.id === unselectedBot)
+    const botDataUpdate = [...botData, returnItem]
+
     setBotArmy(updateArmy)
     setBotSpecs(botArmy)
-    
+    setBotData(botDataUpdate)
   }
 
   function deleteBot(botDelete){
@@ -80,7 +83,7 @@ function BotsPage() {
   }
 
   const botRender = botData.find(bot => bot.id === botSpecs.id) ? <BotSpecs bot={botSpecs} enlist={enlistBot} backButton={reversePage}/> : <BotCollection bots={botData} botSelector={selectBot} relieveDuty={deleteBot}/>
-  console.log(botRender)
+  
   
   return (
     <div>
