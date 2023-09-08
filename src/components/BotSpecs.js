@@ -9,7 +9,7 @@ const botTypeClasses = {
   Captain: "icon star",
 };
 
-function BotSpecs({ bot , enlist }) {
+function BotSpecs({ bot , enlist , backButton }) {
   // Sinlge BotCard Presentation
 // Displays more information about Bot
 //  1. Receive single Bot info ----- Prop
@@ -64,11 +64,8 @@ function handleSelect(event){
             </div>
             <button
               className="ui button fluid"
-              onClick={() =>
-                console.log(
-                  "connect this to a function that adds this bot to your bot army list"
-                )
-              }
+              id={bot.id}
+              onClick={()=>backButton()}
             >
               Go Back
             </button>
